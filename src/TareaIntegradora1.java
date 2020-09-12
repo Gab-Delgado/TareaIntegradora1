@@ -127,10 +127,44 @@ public class TareaIntegradora1 {
 		System.out.println("En la Ferreteria del Barrio: " + barrioPrice);
 		System.out.println("-----------------------");
 	}
-	
+	double cont1 = 0;
+	double cont2 = 0;
+	double cont3 = 0;
+	for (int i = 0; i < MAX; i++) { // OPCIONAL
+		Double homePrice = quantity[i] * homeCenterPrice[i];
+		Double centroPrice = quantity[i] * ferreteriaCentroPrice[i];
+		Double barrioPrice = quantity[i] * ferreteriaBarrioPrice[i];
+		
+		cont1+= homePrice;
+		cont2+=centroPrice;
+		cont3+=barrioPrice;
+	}
+	System.out.println("El precio de todos los materiales en HomeCenter es: " + cont1); // RECORDAR VALORES DE MANO DE OBRA Y DE DOMICILIO
+	System.out.println("El precio de todos los materiales en La Ferreteria Del Centro es: " + cont2);
+	System.out.println("El precio de todos los materiales en La Ferreteria Del Barrio es: " + cont3);
+	System.out.println("-----------------------");
 	
 	
 	// ------------- Mejor precio comprando en cada ferreteria
+	
+	for (int k = 0; k < MAX; k++) {
+		Double homePrice = quantity[k] * homeCenterPrice[k];
+		Double centroPrice = quantity[k] * ferreteriaCentroPrice[k];
+		Double barrioPrice = quantity[k] * ferreteriaBarrioPrice[k];
+		
+		if (homePrice < centroPrice && homePrice < barrioPrice) {
+			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
+			System.out.println(homePrice + " de: " + "HomeCenter");
+		} else if (centroPrice < homePrice && centroPrice < barrioPrice) {
+			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
+			System.out.println(centroPrice + " de: " + " La Ferreteria Del Centro");
+		} else {
+			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
+			System.out.println(barrioPrice + " de: " + " La Ferreteria Del Barrio");
+		}
+	}
+	
+	// ------------- Desplegar los productos por tipo de utilización
 	
 	// !!!!! RECORDAR QUE SI HAY ALGUN TIPO DE UTILIDAD QUE NO ES LLAMADA NUNCA, ENTONCES NO SE PONE SU IMPUESTO
 	
