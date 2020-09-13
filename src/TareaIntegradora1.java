@@ -6,7 +6,6 @@ public class TareaIntegradora1 {
 	final static int OBRA_NEGRA = 1300000;
 	final static int OBRA_BLANCA = 2600000;
 	final static int PINTURA = 980000;
-	
 	// ------------- Creación de metodos
 	public static Usage chooseUsage(int opt) {
 		Usage mock = null;
@@ -57,6 +56,56 @@ public class TareaIntegradora1 {
 			}
 		
 		}
+	public static int orderingPrice(int order, Ubication ubication, double totalPrice) {
+		if (totalPrice < 80000) {
+			if (ubication == Ubication.NORTE || ubication == Ubication.SUR) {
+				order = 120000;
+			} else if (ubication == Ubication.CENTRO) {
+				order = 50000;
+			}
+		} else if (totalPrice >= 80000 && totalPrice < 300000) {
+			if (ubication == Ubication.NORTE) {
+				order = 28000;
+			} else if (ubication == Ubication.SUR) {
+				order = 55000;
+			} else if (ubication == Ubication.CENTRO) {
+				order = 0;
+			}
+		} else {
+			order = 0;
+		}
+		return order;
+	}
+	public static int initiateWorkForce (Usage[] usage, int workForce, int MAX) {
+		int ON = 0;
+		int OB = 0;
+		int PN = 0;
+		
+		for (int i = 0; i < MAX; i++) {
+			if (usage[i] == Usage.Obra_Negra) {
+				ON = 1;
+			} else if (usage[i] == Usage.Obra_Blanca) {
+				OB = 1;
+			} else {
+				PN = 1;
+			}
+		}
+		
+		switch(ON) {
+			case 1:
+				workForce += OBRA_NEGRA;
+		}
+		switch (OB) {
+			case 1:
+				workForce += OBRA_BLANCA;
+		}
+		switch (PN) {
+			case 1:
+				workForce += PINTURA;
+		}
+		
+		return workForce;
+	}
 	
 	public static void main(String args[]) {
 	
@@ -68,11 +117,12 @@ public class TareaIntegradora1 {
 	
 	String [] materials;
 	Double [] quantity;
-	Double [] price; // No puede haber un precio general, si no, uno por cada establecimiento.
 	Double [] homeCenterPrice;
 	Double [] ferreteriaCentroPrice;
 	Double [] ferreteriaBarrioPrice;
 	Usage [] usage;
+	int orderPrice = 0;
+	int workForce = 0;
 	Ubication ubication = null;
 	
 	// ------------- Creación y asignación de los arreglos
@@ -87,17 +137,18 @@ public class TareaIntegradora1 {
 	ubication = chooseUbication(opt, ubication);
 	System.out.println(ubication + " -------------------- "); // NOT NECCESARY
 	
+	
 	// -----------
 	
 	materials = new String[MAX];
 	quantity= new Double[MAX];
-	price = new Double[MAX];
 	homeCenterPrice = new Double[MAX];
 	ferreteriaCentroPrice = new Double[MAX];;
 	ferreteriaBarrioPrice = new Double[MAX];;
 	usage = new Usage[MAX];
 	initiateArray(in, MAX, materials, quantity, homeCenterPrice, ferreteriaCentroPrice, ferreteriaBarrioPrice, usage);
-	
+	workForce = initiateWorkForce(usage, workForce, MAX);
+	System.out.println("El precio es: " + workForce);
 	System.out.println(""); // NOT NECCESARY
 	
 	// ------------- Procesos
@@ -120,7 +171,7 @@ public class TareaIntegradora1 {
 		Double centroPrice = quantity[j] * ferreteriaCentroPrice[j];
 		Double barrioPrice = quantity[j] * ferreteriaBarrioPrice[j];
 		
-		System.out.println("-----------------------");
+		System.out.println("-----------------------"); // Deberia poder saltarme esto.
 		System.out.println("Para el material " + materials[j] + " hay estos precios:");
 		System.out.println("En HomeCenter: " + homePrice);
 		System.out.println("En la Ferreteria del Centro: " + centroPrice);
@@ -139,9 +190,15 @@ public class TareaIntegradora1 {
 		cont2+=centroPrice;
 		cont3+=barrioPrice;
 	}
-	System.out.println("El precio de todos los materiales en HomeCenter es: " + cont1); // RECORDAR VALORES DE MANO DE OBRA Y DE DOMICILIO
-	System.out.println("El precio de todos los materiales en La Ferreteria Del Centro es: " + cont2);
-	System.out.println("El precio de todos los materiales en La Ferreteria Del Barrio es: " + cont3);
+	orderPrice = orderingPrice(orderPrice, ubication, cont1);
+	System.out.println("El domicilio es: " + orderPrice);
+	System.out.println("El precio de todos los materiales en HomeCenter es: " + (cont1 + orderPrice + workForce)); // RECORDAR VALORES DE MANO DE OBRA Y DE DOMICILIO
+	orderPrice = orderingPrice(orderPrice, ubication, cont2);
+	System.out.println("El domicilio es: " + orderPrice);
+	System.out.println("El precio de todos los materiales en La Ferreteria Del Centro es: " + (cont2 + orderPrice + workForce));
+	orderPrice = orderingPrice(orderPrice, ubication, cont3);
+	System.out.println("El domicilio es: " + orderPrice);
+	System.out.println("El precio de todos los materiales en La Ferreteria Del Barrio es: " + (cont3 + orderPrice + workForce));
 	System.out.println("-----------------------");
 	
 	
@@ -169,8 +226,9 @@ public class TareaIntegradora1 {
 		}
 		System.out.println("--------------------------------");
 	}
-	
-	System.out.println("El mejor precio tras comprar en las diferentes ferreterias es: " + cont4);
+	orderPrice = orderingPrice(orderPrice, ubication, cont4);
+	System.out.println("El domicilio es " + orderPrice );
+	System.out.println("El mejor precio tras comprar en las diferentes ferreterias es: " + (cont4 + orderPrice + workForce));
 	System.out.println("--------------------------------");
 	
 	// ------------- Desplegar los productos por tipo de utilizacion
@@ -178,8 +236,6 @@ public class TareaIntegradora1 {
 	String ObraNegra = "";
 	String ObraBlanca = "";
 	String Pintura = "";
-	String open = "[";
-	String close = "]";
 	int i = 0;
 	while (i < MAX) {
 		if (usage[i] == Usage.Obra_Negra) {
@@ -193,19 +249,18 @@ public class TareaIntegradora1 {
 	}
 	
 	System.out.println("Materiales para Obra Negra: ");
-	System.out.println(open + ObraNegra + close);
+	System.out.println("[" + ObraNegra + "]");
 	System.out.println("-----------------------");
 	System.out.println("Materiales para Obra Blanca: ");
-	System.out.println(open + ObraBlanca + close);
+	System.out.println("[" + ObraBlanca + "]");
 	System.out.println("-----------------------");
 	System.out.println("Materiales para Pintura: ");
-	System.out.println(open + Pintura + close);
+	System.out.println("[" + Pintura + "]");
 	
 	
 	
 	
 	// !!!!! RECORDAR QUE SI HAY ALGUN TIPO DE UTILIDAD QUE NO ES LLAMADA NUNCA, ENTONCES NO SE PONE SU IMPUESTO
-	// !!!!! RECORDAR AGREGAR EL VALOR DE LOS DOMICILIOS EN EL EJERCICIO. NO LO HE HECHO AÚN.
 	// ------------- Salidas
 	
 	
