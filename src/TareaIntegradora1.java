@@ -81,7 +81,7 @@ public class TareaIntegradora1 {
 	MAX = in.nextInt();
 	in.nextLine();
 	
-	System.out.println("Cual es tu ubicación? (1:Norte, 2:CENTRO o 3:SUR)");
+	System.out.println("Cual es tu ubicacion? (1:Norte, 2:CENTRO o 3:SUR)");
 	int opt = in.nextInt();
 	in.nextLine();
 	ubication = chooseUbication(opt, ubication);
@@ -147,6 +147,8 @@ public class TareaIntegradora1 {
 	
 	// ------------- Mejor precio comprando en cada ferreteria
 	
+	
+	double cont4 = 0;
 	for (int k = 0; k < MAX; k++) {
 		Double homePrice = quantity[k] * homeCenterPrice[k];
 		Double centroPrice = quantity[k] * ferreteriaCentroPrice[k];
@@ -155,19 +157,55 @@ public class TareaIntegradora1 {
 		if (homePrice < centroPrice && homePrice < barrioPrice) {
 			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
 			System.out.println(homePrice + " de: " + "HomeCenter");
+			cont4+= homePrice;
 		} else if (centroPrice < homePrice && centroPrice < barrioPrice) {
 			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
 			System.out.println(centroPrice + " de: " + " La Ferreteria Del Centro");
+			cont4+=centroPrice;
 		} else {
 			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
 			System.out.println(barrioPrice + " de: " + " La Ferreteria Del Barrio");
+			cont4+=barrioPrice;
 		}
+		System.out.println("--------------------------------");
 	}
 	
-	// ------------- Desplegar los productos por tipo de utilización
+	System.out.println("El mejor precio tras comprar en las diferentes ferreterias es: " + cont4);
+	System.out.println("--------------------------------");
+	
+	// ------------- Desplegar los productos por tipo de utilizacion
+	
+	String ObraNegra = "";
+	String ObraBlanca = "";
+	String Pintura = "";
+	String open = "[";
+	String close = "]";
+	int i = 0;
+	while (i < MAX) {
+		if (usage[i] == Usage.Obra_Negra) {
+			ObraNegra+= materials[i] + ", ";
+		} else if (usage[i] == Usage.Obra_Blanca) {
+			ObraBlanca+= materials[i] + ", ";
+		} else {
+			Pintura+= materials[i] + ", ";
+		}
+		i++;
+	}
+	
+	System.out.println("Materiales para Obra Negra: ");
+	System.out.println(open + ObraNegra + close);
+	System.out.println("-----------------------");
+	System.out.println("Materiales para Obra Blanca: ");
+	System.out.println(open + ObraBlanca + close);
+	System.out.println("-----------------------");
+	System.out.println("Materiales para Pintura: ");
+	System.out.println(open + Pintura + close);
+	
+	
+	
 	
 	// !!!!! RECORDAR QUE SI HAY ALGUN TIPO DE UTILIDAD QUE NO ES LLAMADA NUNCA, ENTONCES NO SE PONE SU IMPUESTO
-	
+	// !!!!! RECORDAR AGREGAR EL VALOR DE LOS DOMICILIOS EN EL EJERCICIO. NO LO HE HECHO AÚN.
 	// ------------- Salidas
 	
 	
