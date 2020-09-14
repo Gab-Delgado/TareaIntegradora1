@@ -106,164 +106,144 @@ public class TareaIntegradora1 {
 		
 		return workForce;
 	}
-	
-	public static void main(String args[]) {
-	
-	System.out.println("Tarea Integradora, nosape");
-	
-	// ------------- Entradas
-	Scanner in = new Scanner(System.in);
-	int MAX;
-	
-	String [] materials;
-	Double [] quantity;
-	Double [] homeCenterPrice;
-	Double [] ferreteriaCentroPrice;
-	Double [] ferreteriaBarrioPrice;
-	Usage [] usage;
-	int orderPrice = 0;
-	int workForce = 0;
-	Ubication ubication = null;
-	
-	// ------------- Creación y asignación de los arreglos
-	
-	System.out.println("Ingresa la cantidad de materiales");
-	MAX = in.nextInt();
-	in.nextLine();
-	
-	System.out.println("Cual es tu ubicacion? (1:Norte, 2:CENTRO o 3:SUR)");
-	int opt = in.nextInt();
-	in.nextLine();
-	ubication = chooseUbication(opt, ubication);
-	System.out.println(ubication + " -------------------- "); // NOT NECCESARY
-	
-	
-	// -----------
-	
-	materials = new String[MAX];
-	quantity= new Double[MAX];
-	homeCenterPrice = new Double[MAX];
-	ferreteriaCentroPrice = new Double[MAX];;
-	ferreteriaBarrioPrice = new Double[MAX];;
-	usage = new Usage[MAX];
-	initiateArray(in, MAX, materials, quantity, homeCenterPrice, ferreteriaCentroPrice, ferreteriaBarrioPrice, usage);
-	workForce = initiateWorkForce(usage, workForce, MAX);
-	System.out.println("El precio es: " + workForce);
-	System.out.println(""); // NOT NECCESARY
-	
-	// ------------- Procesos
-	
-	for (int i = 0; i < materials.length; i++) { // NOT NECCESARY
-		System.out.println("-------------");
-		System.out.println(materials[i]);
-		System.out.println(quantity[i]);
-		System.out.println(homeCenterPrice[i]);
-		System.out.println(ferreteriaCentroPrice[i]);
-		System.out.println(ferreteriaBarrioPrice[i]);
-		System.out.println(usage[i]);
-		System.out.println("-------------");
+	public static void displayByUsage(Usage[] usage, String[] materials, int MAX) {
+		
+		String ObraNegra = "";
+		String ObraBlanca = "";
+		String Pintura = "";
+		int i = 0;
+		while (i < MAX) {
+			if (usage[i] == Usage.Obra_Negra) {
+				ObraNegra+= materials[i] + ", ";
+			} else if (usage[i] == Usage.Obra_Blanca) {
+				ObraBlanca+= materials[i] + ", ";
+			} else {
+				Pintura+= materials[i] + ", ";
+			}
+			i++;
+		}
+		
+		System.out.println("Materiales para Obra Negra: ");
+		System.out.println("[" + ObraNegra + "]");
+		System.out.println("-----------------------");
+		System.out.println("Materiales para Obra Blanca: ");
+		System.out.println("[" + ObraBlanca + "]");
+		System.out.println("-----------------------");
+		System.out.println("Materiales para Pintura: ");
+		System.out.println("[" + Pintura + "]");
 	}
-	
-	// ------------- Precios por ferreteria
-	
-	for (int j = 0; j < MAX ; j++) {
+	public static double priceByEstablishment(int MAX, double cont4, String [] materials, Double [] quantity,Double [] homeCenterPrice, Double [] ferreteriaCentroPrice, Double [] ferreteriaBarrioPrice ) {
+		for (int j = 0; j < MAX ; j++) {
 		Double homePrice = quantity[j] * homeCenterPrice[j];
 		Double centroPrice = quantity[j] * ferreteriaCentroPrice[j];
 		Double barrioPrice = quantity[j] * ferreteriaBarrioPrice[j];
+
+		if (homePrice <= centroPrice && homePrice <= barrioPrice) {
+			System.out.println("El mejor precio para el material : " + materials[j] + " es:");
+			System.out.println(homePrice + " de: " + "HomeCenter");
+			cont4+= homePrice;
+		} else if (centroPrice <= homePrice && centroPrice <= barrioPrice) {
+			System.out.println("El mejor precio para el material : " + materials[j] + " es:");
+			System.out.println(centroPrice + " de: " + " La Ferreteria Del Centro");
+			cont4+=centroPrice;
+		} else if (barrioPrice <= homePrice && barrioPrice <= centroPrice){
+			System.out.println("El mejor precio para el material : " + materials[j] + " es:");
+			System.out.println(barrioPrice + " de: " + " La Ferreteria Del Barrio");
+			cont4+=barrioPrice;
+			}
+		}
+		return cont4;
 		
-		System.out.println("-----------------------"); // Deberia poder saltarme esto.
-		System.out.println("Para el material " + materials[j] + " hay estos precios:");
-		System.out.println("En HomeCenter: " + homePrice);
-		System.out.println("En la Ferreteria del Centro: " + centroPrice);
-		System.out.println("En la Ferreteria del Barrio: " + barrioPrice);
+	}
+	public static void materialsAndTotalPrices(int MAX, String [] materials, Double [] quantity, Double [] homeCenterPrice, Double [] ferreteriaCentroPrice, Double [] ferreteriaBarrioPrice, Usage [] usage, int orderPrice, Ubication ubication, int workForce) {
+		double cont1 = 0;
+		double cont2 = 0;
+		double cont3 = 0;
+		for (int i = 0; i < MAX; i++) { // NOT NECCESARY
+			Double homePrice = quantity[i] * homeCenterPrice[i];
+			Double centroPrice = quantity[i] * ferreteriaCentroPrice[i];
+			Double barrioPrice = quantity[i] * ferreteriaBarrioPrice[i];
+		
+			cont1+= homePrice;
+			cont2+=centroPrice;
+			cont3+=barrioPrice;
+			
+			System.out.println("-------------");
+			System.out.println("Material: " + materials[i]);
+			System.out.println("Cantidad: " + quantity[i]);
+			System.out.println("Precio en HomeCenter: " + homeCenterPrice[i]);
+			System.out.println("Precio en La Ferreteria del Centro: " + ferreteriaCentroPrice[i]);
+			System.out.println("Precio en La Ferreteria del Barrio: " + ferreteriaBarrioPrice[i]);
+			System.out.println("Utilizacion: " + usage[i]);
+			System.out.println("-------------");
+		}
+		orderPrice = orderingPrice(orderPrice, ubication, cont1);
+		System.out.println("El domicilio es: " + orderPrice);
+		System.out.println("El precio de todos los materiales en HomeCenter es: " + (cont1 + orderPrice + workForce)); // RECORDAR VALORES DE MANO DE OBRA Y DE DOMICILIO
+		orderPrice = orderingPrice(orderPrice, ubication, cont2);
+		System.out.println("El domicilio es: " + orderPrice);
+		System.out.println("El precio de todos los materiales en La Ferreteria Del Centro es: " + (cont2 + orderPrice + workForce));
+		orderPrice = orderingPrice(orderPrice, ubication, cont3);
+		System.out.println("El domicilio es: " + orderPrice);
+		System.out.println("El precio de todos los materiales en La Ferreteria Del Barrio es: " + (cont3 + orderPrice + workForce));
 		System.out.println("-----------------------");
 	}
-	double cont1 = 0;
-	double cont2 = 0;
-	double cont3 = 0;
-	for (int i = 0; i < MAX; i++) { // OPCIONAL
-		Double homePrice = quantity[i] * homeCenterPrice[i];
-		Double centroPrice = quantity[i] * ferreteriaCentroPrice[i];
-		Double barrioPrice = quantity[i] * ferreteriaBarrioPrice[i];
-		
-		cont1+= homePrice;
-		cont2+=centroPrice;
-		cont3+=barrioPrice;
-	}
-	orderPrice = orderingPrice(orderPrice, ubication, cont1);
-	System.out.println("El domicilio es: " + orderPrice);
-	System.out.println("El precio de todos los materiales en HomeCenter es: " + (cont1 + orderPrice + workForce)); // RECORDAR VALORES DE MANO DE OBRA Y DE DOMICILIO
-	orderPrice = orderingPrice(orderPrice, ubication, cont2);
-	System.out.println("El domicilio es: " + orderPrice);
-	System.out.println("El precio de todos los materiales en La Ferreteria Del Centro es: " + (cont2 + orderPrice + workForce));
-	orderPrice = orderingPrice(orderPrice, ubication, cont3);
-	System.out.println("El domicilio es: " + orderPrice);
-	System.out.println("El precio de todos los materiales en La Ferreteria Del Barrio es: " + (cont3 + orderPrice + workForce));
-	System.out.println("-----------------------");
 	
+	public static void main(String args[]) {
+	// ------------- Entradas ----------------------------------//
+		Scanner in = new Scanner(System.in);
+		int MAX;
+		
+		String [] materials;
+		Double [] quantity;
+		Double [] homeCenterPrice;
+		Double [] ferreteriaCentroPrice;
+		Double [] ferreteriaBarrioPrice;
+		Usage [] usage;
+		int orderPrice = 0;
+		int workForce = 0;
+		Ubication ubication = null;
+	
+	// ------------- Creación y asignación de los arreglos --------------------//
+	
+		System.out.println("Ingresa la cantidad de materiales");
+		MAX = in.nextInt();
+		in.nextLine();
+		
+		System.out.println("Cual es tu ubicacion? (1:Norte, 2:CENTRO o 3:SUR)");
+		int opt = in.nextInt();
+		in.nextLine();
+		ubication = chooseUbication(opt, ubication);
+		System.out.println("Ubicacion: " + ubication);
+		
+		materials = new String[MAX];
+		quantity= new Double[MAX];
+		homeCenterPrice = new Double[MAX];
+		ferreteriaCentroPrice = new Double[MAX];;
+		ferreteriaBarrioPrice = new Double[MAX];;
+		usage = new Usage[MAX];
+		initiateArray(in, MAX, materials, quantity, homeCenterPrice, ferreteriaCentroPrice, ferreteriaBarrioPrice, usage);
+		workForce = initiateWorkForce(usage, workForce, MAX);
+		System.out.println("El precio es: " + workForce);
+
+	// ------------- Impresion de Materiales y Precios totales en las ferreterias
+	
+		materialsAndTotalPrices(MAX, materials, quantity, homeCenterPrice, ferreteriaCentroPrice, ferreteriaBarrioPrice, usage, orderPrice, ubication, workForce);	
+	
+	// ------------- Precios por ferreteria
+	
+		double cont4 = 0;
+		cont4 = priceByEstablishment(MAX, cont4, materials, quantity, homeCenterPrice, ferreteriaCentroPrice, ferreteriaBarrioPrice);
 	
 	// ------------- Mejor precio comprando en cada ferreteria
 	
-	
-	double cont4 = 0;
-	for (int k = 0; k < MAX; k++) {
-		Double homePrice = quantity[k] * homeCenterPrice[k];
-		Double centroPrice = quantity[k] * ferreteriaCentroPrice[k];
-		Double barrioPrice = quantity[k] * ferreteriaBarrioPrice[k];
-		
-		if (homePrice < centroPrice && homePrice < barrioPrice) {
-			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
-			System.out.println(homePrice + " de: " + "HomeCenter");
-			cont4+= homePrice;
-		} else if (centroPrice < homePrice && centroPrice < barrioPrice) {
-			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
-			System.out.println(centroPrice + " de: " + " La Ferreteria Del Centro");
-			cont4+=centroPrice;
-		} else {
-			System.out.println("El mejor precio para el material : " + materials[k] + " es:");
-			System.out.println(barrioPrice + " de: " + " La Ferreteria Del Barrio");
-			cont4+=barrioPrice;
-		}
+		orderPrice = orderingPrice(orderPrice, ubication, cont4);
+		System.out.println("El domicilio es " + orderPrice );
+		System.out.println("El mejor precio tras comprar en las diferentes ferreterias es: " + (cont4 + orderPrice + workForce));
 		System.out.println("--------------------------------");
-	}
-	orderPrice = orderingPrice(orderPrice, ubication, cont4);
-	System.out.println("El domicilio es " + orderPrice );
-	System.out.println("El mejor precio tras comprar en las diferentes ferreterias es: " + (cont4 + orderPrice + workForce));
-	System.out.println("--------------------------------");
 	
 	// ------------- Desplegar los productos por tipo de utilizacion
 	
-	String ObraNegra = "";
-	String ObraBlanca = "";
-	String Pintura = "";
-	int i = 0;
-	while (i < MAX) {
-		if (usage[i] == Usage.Obra_Negra) {
-			ObraNegra+= materials[i] + ", ";
-		} else if (usage[i] == Usage.Obra_Blanca) {
-			ObraBlanca+= materials[i] + ", ";
-		} else {
-			Pintura+= materials[i] + ", ";
-		}
-		i++;
-	}
-	
-	System.out.println("Materiales para Obra Negra: ");
-	System.out.println("[" + ObraNegra + "]");
-	System.out.println("-----------------------");
-	System.out.println("Materiales para Obra Blanca: ");
-	System.out.println("[" + ObraBlanca + "]");
-	System.out.println("-----------------------");
-	System.out.println("Materiales para Pintura: ");
-	System.out.println("[" + Pintura + "]");
-	
-	
-	
-	
-	// !!!!! RECORDAR QUE SI HAY ALGUN TIPO DE UTILIDAD QUE NO ES LLAMADA NUNCA, ENTONCES NO SE PONE SU IMPUESTO
-	// ------------- Salidas
-	
-	
-	
+		displayByUsage(usage, materials, MAX);
 	}
 }
