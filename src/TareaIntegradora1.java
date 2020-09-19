@@ -3,21 +3,21 @@ public class TareaIntegradora1 {
 	
 	// ------------- Creación de las constantes
 	
-	final static int BLACK_WORK = 1300000;
-	final static int WHITE_WORK = 2600000;
-	final static int PAINT = 980000;
+	final static int BLACK_WORK = 1300000; // Constant used for the workForce, represents the price of the black_work.
+	final static int WHITE_WORK = 2600000; // Constant used for the workForce, represents the price of the white_work.
+	final static int PAINT = 980000; // Constant used for the workForce, represents the price of the paint.
 	// ------------- Creación de metodos
 	
 	/**
-	* Calcula el tipo de utilizacion para cada material<br>
-	* <b> pre: </b> La opcion tiene que estar entre 1, 2 o 3. <br>
+	* Calculates the type of usage for each material.<br>
+	* <b> pre: </b>The opt must be between 1, 2 or 3. <br>
 	* <b> pos: </b> <br>
-	* @param opt, opcion elegida por el usuario
-	* @return mock, es de tipo usage
+	* @param opt, option chosen by the user
+	* @return mock, it is of type Usage
 	*/
 	
-	public static Usage chooseUsage(int opt) {
-		Usage mock = null;
+	public static Usage chooseUsage(int opt) { //Calculates the type of usage for each material
+		Usage mock = null; // Used to return the value of the usage.
 		switch (opt) {
 			case 1:
 				mock = Usage.Black_Work;
@@ -32,15 +32,15 @@ public class TareaIntegradora1 {
 		return mock;
 	}
 	/**
-	* Asigna la ubicacion del usuario dependiendo de su eleccion <br>
-	* <b> pre: </b> La opcion tiene que estar entre 1, 2 o 3. <br>
+	* Asigns the Ubication of the user depending on his choice.<br>
+	* <b> pre: </b> The option must be between 1, 2 or 3. <br>
 	* <b> pos: </b> <br>
-	* @param opt, opcion elegida por el usuario
-	* @param ubication, variable de tipo Ubication
-	* @return ubication, es de tipo Ubication
+	* @param opt, Option chosen by the user.
+	* @param ubication, var of type Ubication
+	* @return ubication, it is of type Ubication. (Used to asign and return the ubication of the user).
 	*/
 	
-	public static Ubication chooseUbication (int opt, Ubication ubication) {
+	public static Ubication chooseUbication (int opt, Ubication ubication) { // Asigns the Ubication of the user depending on his choice.
 		switch (opt) {
 			case 1:
 				ubication = Ubication.NORTH;
@@ -56,20 +56,20 @@ public class TareaIntegradora1 {
 	}
 	
 	/**
-	* Llena los arreglos con los datos pertinentes <br>
-	* <b> pre: </b> El escaner y los arreglos tienen que estar inicializados. <br>
-	* <b> pos: </b> Recorre los arreglos y le añade los datos a cada uno. <br>
-	* @param in, hace referencia al scanner
-	* @param size, es la longitud asignada a los arrays
-	* @param materialsArr, es el arreglo de materiales a llenar
-	* @param quantityArr, es el arreglo de las cantidades de cada material
-	* @param homeCenterArr, es el arreglo de los precios en homecenter para cada material
-	* @param ferreteriaCentroArr, es el arreglo de los precios en la ferreteria del centro para cada material
-	* @param ferreteriaBarrioArr, es el arreglo de los precios en la ferreteria del barrio para cada material
-	* @param usageArr, es el arreglo en el que se pone la utilizacion de cada material
+	* Fills the arrays with the necessary data <br>
+	* <b> pre: </b> The scaner must be defined and all the arrays must be initialized. <br>
+	* <b> pos: </b> Iterates through the arrays and adds data to each one of them. <br>
+	* @param in, it is a reference to the scanner
+	* @param size, is the asigned length for the arrays
+	* @param materialsArr, Material's array to fill.
+	* @param quantityArr, Quantity array of each material
+	* @param homeCenterArr, Array of HomeCenter's prices for each material
+	* @param ferreteriaCentroArr, Array of Ferreteria del Centro's prices for each material
+	* @param ferreteriaBarrioArr, Array of Ferreteria del Barrio's prices for each material
+	* @param usageArr, It is the array that contains the usage of each material.
 	*/
 	
-	public static  void initiateArray ( Scanner in, int size, String[] materialsArr, Double[] quantityArr, Double[] homeCenterArr, Double[] ferreteriaCentroArr, Double[] ferreteriaBarrioArr, Usage[] usageArr) {
+	public static  void initiateArray ( Scanner in, int size, String[] materialsArr, Double[] quantityArr, Double[] homeCenterArr, Double[] ferreteriaCentroArr, Double[] ferreteriaBarrioArr, Usage[] usageArr) { // Fills the arrays with the necessary data 
 		
 			for (int i = 0; i < size; i++) {
 				System.out.println("Ingresa un material");
@@ -92,15 +92,15 @@ public class TareaIntegradora1 {
 		}
 		
 	/**
-	* Selecciona el precio del domicilio dependiendo de los parametros <br>
-	* <b> pre: </b> Tiene que estar inicializada la variable order, la ubicacion ya tiene que estar definida, y tenemos que tener algun precio (HomeCenter, Ferreteria del Barrio, F del Centro, o la Mejor Cotizacion). <br>
+	* Selects the orderPrice depending on the parameters <br>
+	* <b> pre: </b> order must be initialized, ubication must be defined and we must add a totalPrice(HomeCenter, Ferreteria del Barrio, Ferreteria del Centro or the best total price). <br>
 	* <b> pos: </b>
-	* @param order, Se le pasa la variable order para no declararla adentro del metodo.
-	* @param ubication,ayuda a definir el domicilio.
-	* @param totalPrice, ayuda a definir el domicilio.
-	* @return order, tras hacer las verificaciones, devuelve el precio a pagar del domicilio.
+	* @param order, We pass this var through the parameters so we don't have to define it inside the method.
+	* @param ubication, It is required to find the value for the orderPrice.
+	* @param totalPrice, It is required to find the value for the orderPrice.
+	* @return order, After the verifications and assigning a value to the var, we return the price of the order.
 	*/
-	public static int orderingPrice(int order, Ubication ubication, double totalPrice) {
+	public static int orderingPrice(int order, Ubication ubication, double totalPrice) { // Selects the orderPrice depending on the parameters
 		if (totalPrice < 80000) {
 			if (ubication == Ubication.NORTH || ubication == Ubication.SOUTH) {
 				order = 120000;
@@ -122,18 +122,18 @@ public class TareaIntegradora1 {
 	}
 	
 	/**
-	* Calcula la mano de obra dependiendo de la utilidad<br>
-	* <b> pre: </b> El arreglo usage tiene que estar definido, la cantidad MAX tiene que ser mayor a 0 y workForce tiene que estar inicializado.<br>
+	* Calculates the workForce depending on the usage of all materials.<br>
+	* <b> pre: </b> The array usage must be defined, MAX must be greater than 0 and workForce must be initialized.<br>
 	* <b> pos: </b>
-	* @param usage, arreglo de utilidades para definir la mano de obra
-	* @param workForce, variable de mano de obra, se pasa como parametro para no inicializarla en el metodo.
-	* @param MAX, indica el limite de los arreglos.
-	* @return workForce, retorna el valor de la mano de obra dependiendo de que utilidades habían.
+	* @param usage, array of usages to define the workForce.
+	* @param workForce, We pass this var through the parameters so we don't have to define it inside the method.
+	* @param MAX, indicates the length of all the arrays.
+	* @return workForce, returns the price of the workForce depending on the usages there were for all the materials.
 	*/
-	public static int initiateWorkForce (Usage[] usage, int workForce, int MAX) {
-		int ON = 0;
-		int OB = 0;
-		int PN = 0;
+	public static int initiateWorkForce (Usage[] usage, int workForce, int MAX) { // Calculates the workForce depending on the usage of all materials.
+		int ON = 0; // Counter, remains in 0 if there are not materials used in this part (Black Work)
+		int OB = 0; // Counter, remains in 0 if there are not materials used in this part (White Work)
+		int PN = 0; // Counter, remains in 0 if there are not materials used in this part (Paint)
 		
 		for (int i = 0; i < MAX; i++) {
 			if (usage[i] == Usage.Black_Work) {
@@ -162,19 +162,19 @@ public class TareaIntegradora1 {
 	}
 	
 	/**
-	* Desplega los materiales por utilidad dependiendo de la seleccion del usuario. <br>
-	* <b> pre: </b> El scanner tiene que estar definido, los arreglos inicializados y la variable MAX, mayor a 0. <br>
+	* Displays the materials by utility depending on the user's selection <br>
+	* <b> pre: </b> The scanner must be defined, the arrays filled and the var MAX, greater than 0. <br>
 	* <b> pos: </b>
-	* @param in, Se usa para ingresar que tipo de utilidad queremos desplegar.
-	* @param usage, Arreglo con las utilidades
-	* @param materials, Arreglo con los materiales
-	* @param MAX, se utiliza para recorrer los arreglos y concatenar unos Strings.
+	* @param in, Used in the input to find out which type of usage the method will display.
+	* @param usage, Array with usages
+	* @param materials, Arreglo with materials
+	* @param MAX, Used to iterate through the arrays and concatenate the strings inside the method.
 	*/
-	public static void displayByUsage( Scanner in ,Usage[] usage, String[] materials, int MAX) {
+	public static void displayByUsage( Scanner in ,Usage[] usage, String[] materials, int MAX) { // Displays the materials by utility depending on the user's selection
 		
-		String BlackWork = "";
-		String WhiteWork = "";
-		String Paint = "";
+		String BlackWork = ""; // Used to save the materials that are used in the Black Work
+		String WhiteWork = ""; // Used to save the materials that are used in the White Work
+		String Paint = ""; // Used to save the materials that are used in the Paint.
 		int i = 0;
 		while (i < MAX) {
 			if (usage[i] == Usage.Black_Work) {
@@ -213,23 +213,23 @@ public class TareaIntegradora1 {
 	}
 	
 	/**
-	* Este metodo despliega los mejores precios de cada material e indica en cual establecimiento se encuentra. <br>
-	* <b> pre: </b> Los arreglos tienen que tener datos y MAX tiene que ser mayor a 0. <br>
+	* This method displays the best prices for each material and the establishment with that price. <br>
+	* <b> pre: </b> The arrays must be filled and MAX has to be greater than 0. <br>
 	* <b> pre: </b> <br>
-	* @param MAX, es la longitud de los arrays, se usa para los ciclos.
-	* @param cont4, Se va sumando con cada uno de los mejores precios por material.
-	* @param materials, array de tipo String. Se usa para pasar el nombre del material y definir con cual se esta trabajando.
-	* @param quantity, array de tipo Double. Se usa para ver la cantidad que hay de ese material y asi obtener el precio
-	* @param homeCenterPrice, array de tipo Double. Es la cantidad individual de cada material, se multiplica con la cantidad y asi obtenemos el total por material de Homecenter
-	* @param ferreteriaCentroPrice, array de tipo Double. Es la cantidad individual de cada material, se multiplica con la cantidad y asi obtenemos el total por material de la Ferreteria del Centro
-	* @param ferreteriaBarrioPrice array de tipo Double. Es la cantidad individual de cada material, se multiplica con la cantidad y asi obtenemos el total por material de la Ferreteria del Barrio
-	* @return cont4, devuelve el valor de la suma de todos los mejores precios.
+	* @param MAX, used to iterate through the arrays.
+	* @param cont4, used as a counter to add each of the best prices.
+	* @param materials, used to display the material name and define display its price.
+	* @param quantity, used to find the quantity of each material and therefore, find its price.
+	* @param homeCenterPrice, individual price for each material, used to multiply itself with the quantity to obtain HomeCenter's price for that material
+	* @param ferreteriaCentroPrice,individual price for each material, used to multiply itself with the quantity to obtain Ferreteria del Centro's price for that material
+	* @param ferreteriaBarrioPrice individual price for each material, used to multiply itself with the quantity to obtain Ferreteria del Barrio's price for that material
+	* @return cont4, returns the sum of each one of the best prices per material.
 	*/
-	public static double priceByEstablishment(int MAX, double cont4, String [] materials, Double [] quantity,Double [] homeCenterPrice, Double [] ferreteriaCentroPrice, Double [] ferreteriaBarrioPrice ) {
+	public static double priceByEstablishment(int MAX, double cont4, String [] materials, Double [] quantity,Double [] homeCenterPrice, Double [] ferreteriaCentroPrice, Double [] ferreteriaBarrioPrice ) { // This method displays the best prices for each material and the establishment with that price.
 		for (int j = 0; j < MAX ; j++) {
-		Double homePrice = quantity[j] * homeCenterPrice[j];
-		Double centroPrice = quantity[j] * ferreteriaCentroPrice[j];
-		Double barrioPrice = quantity[j] * ferreteriaBarrioPrice[j];
+		Double homePrice = quantity[j] * homeCenterPrice[j]; // HomeCenter's price for each material depending on the quantity
+		Double centroPrice = quantity[j] * ferreteriaCentroPrice[j]; // Ferreteria del Centro's price for each material depending on the quantity
+		Double barrioPrice = quantity[j] * ferreteriaBarrioPrice[j]; // Ferreteria del Barrio's price for each material depending on the quantity
 
 		if (homePrice <= centroPrice && homePrice <= barrioPrice) {
 			System.out.println("El mejor precio para el material : " + materials[j] + " es:");
@@ -250,28 +250,28 @@ public class TareaIntegradora1 {
 	}
 	
 	/**
-	* Despliega la informacion existente de cada material y muestra el total de todos los materiales por cada establecimiento (El cual se obtiene con 3 contadores). <br>
-	* <b> pre: </b> Todos los arreglos deben de tener los datos llenos, MAX debe de ser mayor a 0, ubication debe de estar definido y la mano de obra ya tuvo que haberse calculado. <br>
+	* Displays the existing data for each material and shows the total price in each establishment (which is obtained with three counters). <br>
+	* <b> pre: </b> The arrays must be filled, MAX must be greater than 0, ubication must be defined and the workForce must have been calculated. <br>
 	* <b> pos: </b> <br>
-	* @param MAX, Se usa como referencia al recorrer los arrays con ciclos.
-	* @param materials, de tipo String. Se usa al desplegar todos los datos por material.
-	* @param quantity, de tipo Double. Se utiliza para multiplicar los precios por establecimiento con la cantidad del mismo material.
-	* @param homeCenterPrice, de tipo Double. Se utiliza para obtener el precio total por material de este establecimiento.
-	* @param ferreteriaCentroPrice, de tipo Double. Se utiliza para obtener el precio total por material de este establecimiento.
-	* @param ferreteriaBarrioPrice, de tipo Double. Se utiliza para obtener el precio total por material de este establecimiento.
-	* @param usage, de tipo Usage. Se utiliza al desplegar todos los datos por material.
-	* @param orderPrice, se pasa como parametro para no volver a definirlo.
-	* @param ubication, de tipo Ubication. Es la ubicacion y se utiliza para poder obtener el valor del domicilio.
-	* @param workForce, Es el precio de la mano de obra, se utiliza para sumarlo con el valor final.
+	* @param MAX, used to iterate through the arrays.
+	* @param materials, used to display the data for each material
+	* @param quantity, used to multiply the price of each material per establishment with the quantity of each material
+	* @param homeCenterPrice, used to obtain the total per establishment
+	* @param ferreteriaCentroPrice, used to obtain the total per establishment
+	* @param ferreteriaBarrioPrice, used to obtain the total per establishment
+	* @param usage, used to display the data for each material
+	* @param orderPrice, used as a paramater so we don't have to initialize it again.
+	* @param ubication, ubication used to defined de orderPrice.
+	* @param workForce, added to the total price for each establishment.
 	*/
-	public static void materialsAndTotalPrices(int MAX, String [] materials, Double [] quantity, Double [] homeCenterPrice, Double [] ferreteriaCentroPrice, Double [] ferreteriaBarrioPrice, Usage [] usage, int orderPrice, Ubication ubication, int workForce) {
-		double cont1 = 0;
-		double cont2 = 0;
-		double cont3 = 0;
+	public static void materialsAndTotalPrices(int MAX, String [] materials, Double [] quantity, Double [] homeCenterPrice, Double [] ferreteriaCentroPrice, Double [] ferreteriaBarrioPrice, Usage [] usage, int orderPrice, Ubication ubication, int workForce) { // Displays the existing data for each material and shows the total price in each establishment (which is obtained with three counters).
+		double cont1 = 0; // Counter to save HomeCenter's total price.
+		double cont2 = 0; // Counter to save Ferreteria del Centro's total price
+		double cont3 = 0; // Counter to save Ferreteria del Barrio's total price
 		for (int i = 0; i < MAX; i++) { 
-			Double homePrice = quantity[i] * homeCenterPrice[i];
-			Double centroPrice = quantity[i] * ferreteriaCentroPrice[i];
-			Double barrioPrice = quantity[i] * ferreteriaBarrioPrice[i];
+			Double homePrice = quantity[i] * homeCenterPrice[i]; // HomeCenter's price for each material depending on the quantity
+			Double centroPrice = quantity[i] * ferreteriaCentroPrice[i]; // Ferreteria del Centro's price for each material depending on the quantity
+			Double barrioPrice = quantity[i] * ferreteriaBarrioPrice[i]; // Ferreteria del Barrio's price for each material depending on the quantity
 		
 			cont1+= homePrice;
 			cont2+=centroPrice;
@@ -301,17 +301,17 @@ public class TareaIntegradora1 {
 	public static void main(String args[]) {
 	// ------------- Entradas ----------------------------------//
 		Scanner in = new Scanner(System.in);
-		int MAX;
+		int MAX; // Var that will represent the length of each array.
 		
-		String [] materials;
-		Double [] quantity;
-		Double [] homeCenterPrice;
-		Double [] ferreteriaCentroPrice;
-		Double [] ferreteriaBarrioPrice;
-		Usage [] usage;
-		int orderPrice = 0;
-		int workForce = 0;
-		Ubication ubication = null;
+		String [] materials; // Array of all the materials
+		Double [] quantity; // Array that contains the quantity of each material
+		Double [] homeCenterPrice; // Array with the price of HomeCenter for each material
+		Double [] ferreteriaCentroPrice; // Array with the price of Ferreteria del Centro for each material
+		Double [] ferreteriaBarrioPrice; // Array with the price of Ferreteria del Barrio for each material
+		Usage [] usage; // Array with the kind of usage for each material.
+		int orderPrice = 0; // Var that will eventually contain the orderPrice
+		int workForce = 0; // Var that will eventually contain the workForce
+		Ubication ubication = null; // Var that will contain the Ubication of the client.
 	
 	// ------------- Creación y asignación de los arreglos --------------------//
 	
@@ -332,21 +332,22 @@ public class TareaIntegradora1 {
 		ferreteriaBarrioPrice = new Double[MAX];;
 		usage = new Usage[MAX];
 		initiateArray(in, MAX, materials, quantity, homeCenterPrice, ferreteriaCentroPrice, ferreteriaBarrioPrice, usage);
-		workForce = initiateWorkForce(usage, workForce, MAX);
+		workForce = initiateWorkForce(usage, workForce, MAX); // We initiate all the arrays, and with their info we also initiate the workForce
 		System.out.println("El precio es: " + workForce);
 
 	// ------------- Impresion de Materiales y Precios totales en las ferreterias
 	
 		materialsAndTotalPrices(MAX, materials, quantity, homeCenterPrice, ferreteriaCentroPrice, ferreteriaBarrioPrice, usage, orderPrice, ubication, workForce);	
-	
+		// We print on screen the existing info for each material and prints the total for each establishment. 
+		
 	// ------------- Precios por ferreteria
 	
 		double cont4 = 0;
 		cont4 = priceByEstablishment(MAX, cont4, materials, quantity, homeCenterPrice, ferreteriaCentroPrice, ferreteriaBarrioPrice);
-	
+		// It prints the total of each material for each establishment (the price contains the workForce, usage and orderPrice).
 	// ------------- Mejor precio comprando en cada ferreteria
 	
-		orderPrice = orderingPrice(orderPrice, ubication, cont4);
+		orderPrice = orderingPrice(orderPrice, ubication, cont4); // Method used to get the order price depending on how much the client will buy.
 		System.out.println("El domicilio es " + orderPrice );
 		System.out.println("El mejor precio tras comprar en las diferentes ferreterias es: " + (cont4 + orderPrice + workForce));
 		System.out.println("--------------------------------");
@@ -354,5 +355,6 @@ public class TareaIntegradora1 {
 	// ------------- Desplegar los productos por tipo de utilizacion
 	
 		displayByUsage(in, usage, materials, MAX);
+		// This method displays all the materials by usage, the materials listed by usage is dependant of the user's choice.
 	}
 }
