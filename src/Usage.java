@@ -1,5 +1,5 @@
 public enum Usage {
-	Obra_Negra,
-	Obra_Blanca,
-	Pintura
+	Black_Work,
+	White_Work,
+	Paint
 }

@@ -1,5 +1,5 @@
 public enum Ubication {
-	NORTE,
-	CENTRO,
-	SUR
+	NORTH,
+	CENTER,
+	SOUTH
 }
